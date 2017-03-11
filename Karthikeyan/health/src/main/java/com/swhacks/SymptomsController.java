@@ -20,10 +20,11 @@ public class SymptomsController {
 	private SymptomService symptomService;
 
 	@GetMapping(value = "/getDiagnosis")
-	public ResponseEntity<Diagnosis> getSymptomDetails(@RequestParam("symptoms") List<String> symptoms)
+	public ResponseEntity<Diagnosis> getSymptomDetails(@RequestParam("symptoms") List<String> symptoms,
+			@RequestParam("sex") String sex, @RequestParam("age") String age)
 			throws RestClientException, JsonProcessingException {
 		List<String> symptomIds = symptomService.getSymptomsForWords(symptoms);
-		Diagnosis dia = symptomService.getDiagnosis(symptomIds);
+		Diagnosis dia = symptomService.getDiagnosis(symptomIds, sex, age);
 		return new ResponseEntity<Diagnosis>(dia, HttpStatus.OK);
 
 	}

@@ -57,11 +57,12 @@ public class SymptomService {
 		return sIds;
 	}
 
-	public Diagnosis getDiagnosis(List<String> symptomIds) throws RestClientException, JsonProcessingException {
+	public Diagnosis getDiagnosis(List<String> symptomIds, String sex, String age)
+			throws RestClientException, JsonProcessingException {
 
 		SecondRequest sr = new SecondRequest();
-		sr.setSex("male");
-		sr.setAge("30");
+		sr.setSex(sex);
+		sr.setAge(age);
 
 		List<Evidence> evidences = new ArrayList<>();
 		for (String symptomId : symptomIds) {
