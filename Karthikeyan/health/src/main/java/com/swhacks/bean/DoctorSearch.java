@@ -12,7 +12,7 @@ public class DoctorSearch {
 	private String limit;
 	@JsonProperty("user_key")
 	private String userKey;
-	private String query;
+	private String condition;
 
 	/**
 	 * @return the location
@@ -75,17 +75,17 @@ public class DoctorSearch {
 	}
 
 	/**
-	 * @return the query
+	 * @return the condition
 	 */
-	public String getQuery() {
-		return query;
+	public String getCondition() {
+		return condition;
 	}
 
 	/**
-	 * @param query
-	 *            the query to set
+	 * @param condition
+	 *            the condition to set
 	 */
-	public void setQuery(String query) {
-		this.query = query;
+	public void setCondition(String condition) {
+		this.condition = condition;
 	}
 }

@@ -18,7 +18,8 @@ public class DoctorSearchService {
 		search.setUserKey(aKey);
 		return restTemplate.getForEntity(
 				"https://api.betterdoctor.com/2016-03-01/doctors?user_key=" + search.getUserKey() + "&query="
-						+ search.getQuery() + "&limit=" + search.getLimit() + "&skip=" + search.getSkip(),
+						+ search.getCondition() + "&limit=" + search.getLimit() + "&skip=" + search.getSkip()
+						+ "&user_location" + search.getLocation() + "&sort=distance-asc",
 				String.class);
 	}
 }

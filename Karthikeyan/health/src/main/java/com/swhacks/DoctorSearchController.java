@@ -18,7 +18,7 @@ public class DoctorSearchController {
 	@GetMapping(value = "/getDoctorsAndInsurance")
 	public ResponseEntity<String> getSymptomDetails(DoctorSearch doctorSearch)
 			throws RestClientException, JsonProcessingException {
-		doctorSearch.setLimit("10");
+		doctorSearch.setLimit("2");
 		doctorSearch.setSkip("0");
 		return doctorService.getDoctors(doctorSearch);
 	}
