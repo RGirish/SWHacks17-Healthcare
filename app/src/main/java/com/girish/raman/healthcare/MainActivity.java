@@ -10,16 +10,19 @@ import android.speech.SpeechRecognizer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.girish.raman.healthcare.model.Output;
+import com.girish.raman.healthcare.utils.NetworkUtils;
 
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -57,7 +60,10 @@ public class MainActivity extends AppCompatActivity implements APIListener, Reco
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    speech.startListening(recognizerIntent);
+                    if (NetworkUtils.connectedToInternet(MainActivity.this))
+                        speech.startListening(recognizerIntent);
+                    else
+                        Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
                 } else {
                     speech.stopListening();
                 }
@@ -88,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements APIListener, Reco
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onError(String error) {
+        Log.d(getClass().getSimpleName(), "FAILED " + error);
+        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
     }
 
     public static void replace(List<String> strings) {
@@ -135,8 +147,10 @@ public class MainActivity extends AppCompatActivity implements APIListener, Reco
     }
 
     @Override
-    public void onError(String error) {
-
+    public void onError(int errorCode) {
+        String errorMessage = getErrorText(errorCode);
+        Log.d(getClass().getSimpleName(), "FAILED " + errorMessage);
+        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -165,13 +179,15 @@ public class MainActivity extends AppCompatActivity implements APIListener, Reco
     }
 
     @Override
-    public void onError(int error) {
-
-    }
-
-    @Override
     public void onResults(Bundle results) {
-
+        ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+        if (matches != null) {
+            for (String s : matches) {
+                Log.e(getClass().getSimpleName(), s);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "No matches found!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
