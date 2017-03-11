@@ -14,6 +14,10 @@
 		3F0A0A801E73BFF4008E385A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A0A7F1E73BFF4008E385A /* Assets.xcassets */; };
 		3F0A0A831E73BFF4008E385A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A0A811E73BFF4008E385A /* LaunchScreen.storyboard */; };
 		3F0A0A8C1E73D0FC008E385A /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F0A0A8B1E73D0FC008E385A /* Speech.framework */; };
+		3F0A0A901E73DAB4008E385A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A8E1E73DAB4008E385A /* Reachability.swift */; };
+		3F0A0A911E73DAB4008E385A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A8F1E73DAB4008E385A /* SwiftyJSON.swift */; };
+		3F0A0A931E73DC10008E385A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A921E73DC10008E385A /* Utils.swift */; };
+		3F0A0A991E73DD9D008E385A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A981E73DD9D008E385A /* DataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		3F0A0A821E73BFF4008E385A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F0A0A841E73BFF4008E385A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F0A0A8B1E73D0FC008E385A /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
+		3F0A0A8E1E73DAB4008E385A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		3F0A0A8F1E73DAB4008E385A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		3F0A0A921E73DC10008E385A /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		3F0A0A981E73DD9D008E385A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +51,7 @@
 		3F0A0A691E73BFF4008E385A = {
 			isa = PBXGroup;
 			children = (
+				3F0A0A8D1E73DAA1008E385A /* Helpers */,
 				3F0A0A741E73BFF4008E385A /* HealthCare */,
 				3F0A0A731E73BFF4008E385A /* Products */,
 				3F0A0A8A1E73D0FC008E385A /* Frameworks */,
@@ -77,6 +86,18 @@
 				3F0A0A8B1E73D0FC008E385A /* Speech.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F0A0A8D1E73DAA1008E385A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3F0A0A981E73DD9D008E385A /* DataManager.swift */,
+				3F0A0A921E73DC10008E385A /* Utils.swift */,
+				3F0A0A8E1E73DAB4008E385A /* Reachability.swift */,
+				3F0A0A8F1E73DAB4008E385A /* SwiftyJSON.swift */,
+			);
+			name = Helpers;
+			path = HealthCare/Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,7 +175,11 @@
 			files = (
 				3F0A0A7E1E73BFF4008E385A /* HealthCare.xcdatamodeld in Sources */,
 				3F0A0A781E73BFF4008E385A /* SWHMainViewController.swift in Sources */,
+				3F0A0A901E73DAB4008E385A /* Reachability.swift in Sources */,
+				3F0A0A911E73DAB4008E385A /* SwiftyJSON.swift in Sources */,
 				3F0A0A761E73BFF4008E385A /* AppDelegate.swift in Sources */,
+				3F0A0A991E73DD9D008E385A /* DataManager.swift in Sources */,
+				3F0A0A931E73DC10008E385A /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +343,7 @@
 				3F0A0A891E73BFF4008E385A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -20,7 +20,9 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     
-    let diff = "Differential Diagnosis, people.. "
+    private let diff = "Differential Diagnosis, people.. "
+    private var recognizedText:String?
+    private var reachability: Reachability? = Reachability.networkReachabilityForInternetConnection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +59,53 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
         }
     }
     
+    private func checkReachability() -> Bool {
+        guard let r = reachability else { return false }
+        if r.isReachable  {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    private func callWebService(symptoms: String)
+    {
+        let apiUrl: String = "http://transitdata.jmc.asu.edu/stops"
+        
+        if checkReachability()
+        {
+            DataManger.getDataFromURLWithSuccess(apiUrl, success: { (apiData) in
+                if(apiData == nil)
+                {
+                    let alert = UIAlertController(title: "Something went wrong", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                        self.dismiss(animated: true, completion: nil)
+//                        self.popToRoot()
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
+                
+                else
+                {
+                    let json = JSON(data: apiData!)
+                    print(json)
+                }
+            })
+        }
+        
+        else
+        {
+            let alert = UIAlertController(title: "Check Data Connection", message: "Not able to load data", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+//                self.popToRoot()
+            }))
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
     @IBAction func microphoneTapped(_ sender: AnyObject) {
         if audioEngine.isRunning {
             audioEngine.stop()
@@ -65,6 +114,12 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
             
             let image : UIImage = UIImage(named:"ready")!
             microphoneButton.setImage(image, for: .normal)
+            
+            if self.recognizedText != nil
+            {
+                callWebService(symptoms: self.recognizedText!)
+            }
+            
         } else {
             startRecording()
             
@@ -106,6 +161,8 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
             var isFinal = false  //8
             
             if result != nil {
+                
+                self.recognizedText = (result?.bestTranscription.formattedString)!
                 
                 self.textView.text = self.diff + " with possible symptoms of " + (result?.bestTranscription.formattedString)! + " and it's not lupus but one of the suspects... Go... "  //9
                 isFinal = (result?.isFinal)!
