@@ -6,52 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Practice {
 
-	@JsonProperty("location_slug")
-	private String locationSlug;
-	@JsonProperty("within_search_area")
-	private String withinSearchArea;
-	@JsonProperty("distance")
-	private double distance;
+	private String distance;
 	private String name;
 	@JsonProperty("visit_address")
 	private VisitAddress visitAddress;
 	@JsonProperty("phones")
 	private List<Phone> phones;
-
-	/**
-	 * @return the locationSlug
-	 */
-	public String getLocationSlug() {
-		return locationSlug;
-	}
-
-	/**
-	 * @param locationSlug
-	 *            the locationSlug to set
-	 */
-	public void setLocationSlug(String locationSlug) {
-		this.locationSlug = locationSlug;
-	}
-
-	/**
-	 * @return the withinSearchArea
-	 */
-	public String getWithinSearchArea() {
-		return withinSearchArea;
-	}
-
-	/**
-	 * @param withinSearchArea
-	 *            the withinSearchArea to set
-	 */
-	public void setWithinSearchArea(String withinSearchArea) {
-		this.withinSearchArea = withinSearchArea;
-	}
+	private String website;
+	@JsonProperty("insurance_uids")
+	private List<String> insuranceUids;
 
 	/**
 	 * @return the distance
 	 */
-	public double getDistance() {
+	public String getDistance() {
 		return distance;
 	}
 
@@ -59,7 +27,7 @@ public class Practice {
 	 * @param distance
 	 *            the distance to set
 	 */
-	public void setDistance(double distance) {
+	public void setDistance(String distance) {
 		this.distance = distance;
 	}
 
@@ -107,4 +75,35 @@ public class Practice {
 	public void setPhones(List<Phone> phones) {
 		this.phones = phones;
 	}
+
+	/**
+	 * @return the website
+	 */
+	public String getWebsite() {
+		return website;
+	}
+
+	/**
+	 * @param website
+	 *            the website to set
+	 */
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	/**
+	 * @return the insuranceUids
+	 */
+	public List<String> getInsuranceUids() {
+		return insuranceUids;
+	}
+
+	/**
+	 * @param insuranceUids
+	 *            the insuranceUids to set
+	 */
+	public void setInsuranceUids(List<String> insuranceUids) {
+		this.insuranceUids = insuranceUids;
+	}
+
 }
