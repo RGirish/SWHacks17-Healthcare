@@ -1,202 +1,220 @@
 package com.girish.raman.healthcare;
 
 import android.Manifest;
-import android.content.Intent;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
-import android.speech.SpeechRecognizer;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.CompoundButton;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.girish.raman.healthcare.model.Condition;
 import com.girish.raman.healthcare.model.Output;
-import com.girish.raman.healthcare.utils.NetworkUtils;
+import com.girish.raman.healthcare.rest.RestClient;
 
-import org.json.JSONObject;
+import net.gotev.speech.GoogleVoiceTypingDisabledException;
+import net.gotev.speech.Speech;
+import net.gotev.speech.SpeechDelegate;
+import net.gotev.speech.SpeechRecognitionNotAvailable;
+import net.gotev.speech.ui.SpeechProgressView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
-public class MainActivity extends AppCompatActivity implements APIListener, RecognitionListener {
+public class MainActivity extends AppCompatActivity implements APIListener, LocationListener {
 
     final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 101;
-    private SpeechRecognizer speech = null;
-    private Intent recognizerIntent;
+    RestClient client;
+    ProgressDialog dialog;
+    LocationManager locationManager;
+    private double longitude;
+    private double latitude;
+    private List<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*RestClient helper = new RestClient(this);
-        helper.sendPostRequest("");*/
+        client = new RestClient(this);
+        list = new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
         } else {
-            setupRecognizer();
+            setup();
         }
     }
 
-    private void setupRecognizer() {
-        speech = SpeechRecognizer.createSpeechRecognizer(this);
-        speech.setRecognitionListener(this);
-        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "en");
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3);
+    private void setup() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        getUserInfo();
+    }
 
-        ((ToggleButton) findViewById(R.id.toggle)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (NetworkUtils.connectedToInternet(MainActivity.this))
-                        speech.startListening(recognizerIntent);
-                    else
-                        Toast.makeText(MainActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
-                } else {
-                    speech.stopListening();
+    private void getUserInfo() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String age = prefs.getString("age", "NA");
+        if ("NA".equals(age)) {
+            setContentView(R.layout.activity_info);
+        }
+    }
+
+    public void onClickSubmitInfo(View view) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putString("age", ((EditText) findViewById(R.id.age)).getText().toString()).apply();
+        prefs.edit().putString("sex", ((Spinner) findViewById(R.id.sex)).getSelectedItem().toString()).apply();
+        setContentView(R.layout.activity_main);
+    }
+
+    public void startListening(View view) {
+        try {
+            SpeechProgressView speechProgressView = (SpeechProgressView) findViewById(R.id.progress);
+            int[] heights = {60, 76, 58, 80, 55};
+            speechProgressView.setBarMaxHeightsInDp(heights);
+
+            Speech.getInstance().startListening(speechProgressView, new SpeechDelegate() {
+                @Override
+                public void onStartOfSpeech() {
+                    Log.i("speech", "speech recognition is now active");
                 }
-            }
-        });
+
+                @Override
+                public void onSpeechRmsChanged(float value) {
+                    Log.d("speech", "rms is now: " + value);
+                }
+
+                @Override
+                public void onSpeechPartialResults(List<String> results) {
+                    StringBuilder str = new StringBuilder();
+                    for (String res : results) {
+                        str.append(res).append(" ");
+                    }
+                    //Log.e("speech", "partial result: " + str.toString().trim());
+                    list.add(str.toString().trim());
+                }
+
+                @Override
+                public void onSpeechResult(String result) {
+                    List<String> mylist = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        String s = list.get(i);
+                        if (i == 0) {
+                            mylist.add(s.trim());
+                        } else {
+                            String ss = s.replace(list.get(i - 1), "");
+                            mylist.add(ss.trim());
+                        }
+                    }
+                    StringBuilder builder = new StringBuilder();
+                    for (String s : mylist) {
+                        builder.append(s).append(",");
+                        Log.e("mylist", s);
+                    }
+
+                    String symptoms = builder.toString().substring(1, builder.toString().length() - 1);
+
+                    Log.e("speech", "result: " + symptoms);
+                    Toast.makeText(MainActivity.this, symptoms, Toast.LENGTH_SHORT).show();
+                    dialog = ProgressDialog.show(MainActivity.this, null, "Wait a minute.", true);
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                    String age = prefs.getString("age", "23");
+                    String sex = prefs.getString("sex", "male");
+                    client.getDiagnosis(symptoms, age, sex);
+                    list.clear();
+                }
+            });
+        } catch (SpeechRecognitionNotAvailable exc) {
+            Log.e("speech", "Speech recognition is not available on this device!");
+        } catch (GoogleVoiceTypingDisabledException exc) {
+            Log.e("speech", "Google voice typing must be enabled!");
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Speech.getInstance().unregisterDelegate();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_RECORD_AUDIO: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    setupRecognizer();
-                } else {
-                    Toast.makeText(MainActivity.this, "Record Audio Permission needed for the app to work!", Toast.LENGTH_SHORT).show();
+                if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(MainActivity.this, "Record Audio and Location Permission needed for the app to work!", Toast.LENGTH_SHORT).show();
                 }
-                return;
+                setup();
             }
         }
     }
 
     @Override
-    public void onComplete(JSONObject result) {
+    public void onComplete(String type, String result) {
+        dialog.dismiss();
         ObjectMapper mapper = new ObjectMapper();
-        Output output = null;
-        try {
-            output = mapper.readValue(result.toString(), Output.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if ("diagnosis".equals(type)) {
+            try {
+                Output output = mapper.readValue(result, Output.class);
+                processOutput(output);
+            } catch (IOException e) {
+                Log.e("IOException", e.toString());
+            }
+        } else if ("doctors".equals(type)) {
+            Log.e("DOCTORS", result);
         }
+    }
+
+    private void processOutput(Output output) {
+        List<Condition> conditionList = output.getConditionList();
+        conditionList.sort(new ConditionsComparator());
+        String conditionName = conditionList.get(0).getName();
+        Speech.getInstance().say("Your problem might be " + conditionName);
+        //Log.e("latitude", String.valueOf(latitude));
+        //Log.e("longitude", String.valueOf(longitude));
+        // client.getDoctors(conditionName, latitude + "," + latitude);
     }
 
     @Override
     public void onError(String error) {
-        Log.d(getClass().getSimpleName(), "FAILED " + error);
-        Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+        dialog.dismiss();
     }
 
-    public static void replace(List<String> strings) {
-        ListIterator<String> iterator = strings.listIterator();
-        while (iterator.hasNext()) {
-            iterator.set(iterator.next().toLowerCase());
-        }
-    }
-
-    public static String getErrorText(int errorCode) {
-        String message;
-        switch (errorCode) {
-            case SpeechRecognizer.ERROR_AUDIO:
-                message = "Audio recording error";
-                break;
-            case SpeechRecognizer.ERROR_CLIENT:
-                message = "Client side error";
-                break;
-            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                message = "Insufficient permissions";
-                break;
-            case SpeechRecognizer.ERROR_NETWORK:
-                message = "Network error";
-                break;
-            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                message = "Network timeout";
-                break;
-            case SpeechRecognizer.ERROR_NO_MATCH:
-                message = "No match";
-                break;
-            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                message = "RecognitionService busy";
-                break;
-            case SpeechRecognizer.ERROR_SERVER:
-                message = "error from server";
-                break;
-            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                message = "No speech input";
-                break;
-            default:
-                message = "Didn't understand, please try again.";
-                break;
-        }
-        return message;
+    public void onLocationChanged(Location location) {
+        //Log.e("changed", "changed");
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
     }
 
     @Override
-    public void onError(int errorCode) {
-        String errorMessage = getErrorText(errorCode);
-        Log.d(getClass().getSimpleName(), "FAILED " + errorMessage);
-        Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onReadyForSpeech(Bundle params) {
+    public void onStatusChanged(String provider, int status, Bundle extras) {
 
     }
 
     @Override
-    public void onBeginningOfSpeech() {
+    public void onProviderEnabled(String provider) {
 
     }
 
     @Override
-    public void onRmsChanged(float rmsdB) {
-
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-
-    }
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        if (matches != null) {
-            for (String s : matches) {
-                Log.e(getClass().getSimpleName(), s);
-            }
-        } else {
-            Toast.makeText(MainActivity.this, "No matches found!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
+    public void onProviderDisabled(String provider) {
 
     }
 }

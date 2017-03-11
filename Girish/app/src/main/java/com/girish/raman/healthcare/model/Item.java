@@ -10,5 +10,29 @@ public class Item {
     @JsonProperty("name")
     private String name;
     @JsonProperty("choices")
-    List<Choice> choiceList;
+    private List<Choice> choiceList;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Choice> getChoiceList() {
+        return choiceList;
+    }
+
+    public void setChoiceList(List<Choice> choiceList) {
+        this.choiceList = choiceList;
+    }
 }

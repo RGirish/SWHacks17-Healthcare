@@ -1,5 +1,7 @@
 package com.girish.raman.healthcare.rest;
 
+import android.util.Log;
+
 import com.girish.raman.healthcare.APIListener;
 import com.girish.raman.healthcare.utils.Constants;
 import com.studioidan.httpagent.HttpAgent;
@@ -14,14 +16,36 @@ public class RestClient {
         this.listener = listener;
     }
 
-    public void sendPostRequest(String input) {
-        HttpAgent.post(Constants.END_POINT)
-                .contentType(Constants.APPLICATION_JSON)
-                .withBody(input)
+    public void getDiagnosis(String symptoms, String age, String sex) {
+        HttpAgent.get(Constants.GETDIAGNOSIS_API_END_POINT)
+                .queryParams("symptoms", symptoms, "sex", sex, "age", age)
                 .goJson(new JsonCallback() {
                     @Override
                     protected void onDone(boolean success, JSONObject jsonResults) {
-                        listener.onComplete(jsonResults);
+                        if (success) {
+                            Log.e("SUCCESS", jsonResults.toString());
+                            listener.onComplete("diagnosis", jsonResults.toString());
+                        } else {
+                            Log.e("FAILUREEEE", "SUCCESS");
+                            listener.onError("error");
+                        }
+                    }
+                });
+    }
+
+    public void getDoctors(String condition, String location) {
+        HttpAgent.get(Constants.GETDOCTORS_API_END_POINT)
+                .queryParams("condition", condition, "location", location)
+                .goJson(new JsonCallback() {
+                    @Override
+                    protected void onDone(boolean success, JSONObject jsonResults) {
+                        if (success) {
+                            Log.e("SUCCESS", jsonResults.toString());
+                            listener.onComplete("doctors", jsonResults.toString());
+                        } else {
+                            Log.e("FAILUREEEE", "SUCCESS");
+                            listener.onError("error");
+                        }
                     }
                 });
     }

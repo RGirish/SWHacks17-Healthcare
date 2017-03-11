@@ -3,6 +3,6 @@ package com.girish.raman.healthcare;
 import org.json.JSONObject;
 
 public interface APIListener {
-    void onComplete(JSONObject result);
+    void onComplete(String type, String result);
     void onError(String error);
 }
