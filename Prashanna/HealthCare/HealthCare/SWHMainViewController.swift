@@ -70,7 +70,7 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
     
     private func callWebService(symptoms: String)
     {
-        let apiUrl: String = "http://transitdata.jmc.asu.edu/stops"
+        let apiUrl: String = "http://10.152.114.246:8080/getDiagnosis?symptoms="+self.recognizedText!+"&sex=male&age=30"
         
         if checkReachability()
         {
@@ -80,25 +80,65 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
                     let alert = UIAlertController(title: "Something went wrong", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                         self.dismiss(animated: true, completion: nil)
-//                        self.popToRoot()
+                        //                        self.popToRoot()
                     }))
                     self.present(alert, animated: true, completion: nil)
                 }
-                
+                    
                 else
                 {
                     let json = JSON(data: apiData!)
                     print(json)
+                    
+                    if let conditionsArray = json["conditions"].array{
+                        for condition in conditionsArray {
+                            let id: String? = condition["id"].stringValue
+                            let name: String? = condition["name"].stringValue
+                            let probability: String? = condition["probability"].stringValue
+                            
+                            print(id!+" "+name!+" "+probability!);
+                        }
+                    }
+                    
+//                     if let question = json["question"] as? [String: Any]
+//                     {
+                            let type: String? = json["question"]["type"].stringValue
+                            let text: String? = json["question"]["text"].stringValue
+                            
+                            print(type!+" "+text!);
+                            
+                            if let items = json["question"]["items"].array
+                            {
+                                for item in items
+                                {
+                                    let id: String? = item["id"].stringValue
+                                    let name: String? = item["name"].stringValue
+                                    
+                                    print(id!+" "+name!);
+                                    
+                                    if let choices = item["choices"].array
+                                    {
+                                        for choice in choices
+                                        {
+                                            let id: String? = choice["id"].stringValue
+                                            let label: String? = choice["label"].stringValue
+                                            
+                                            print(id!+" "+label!);
+                                        }
+                                    }
+                                }
+                            }
+//                    }
                 }
             })
         }
-        
+            
         else
         {
             let alert = UIAlertController(title: "Check Data Connection", message: "Not able to load data", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                 self.dismiss(animated: true, completion: nil)
-//                self.popToRoot()
+                //                self.popToRoot()
             }))
             self.present(alert, animated: true, completion: nil)
             

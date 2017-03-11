@@ -18,6 +18,9 @@
 		3F0A0A911E73DAB4008E385A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A8F1E73DAB4008E385A /* SwiftyJSON.swift */; };
 		3F0A0A931E73DC10008E385A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A921E73DC10008E385A /* Utils.swift */; };
 		3F0A0A991E73DD9D008E385A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A981E73DD9D008E385A /* DataManager.swift */; };
+		3F0A0A9E1E749D56008E385A /* VideoSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0A0A9C1E749D56008E385A /* VideoSplashViewController.swift */; };
+		3F0A0A9F1E749D56008E385A /* WebViewContent.html in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A0A9D1E749D56008E385A /* WebViewContent.html */; };
+		3F0A0AA21E749D77008E385A /* titleSequence.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3F0A0AA11E749D77008E385A /* titleSequence.gif */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		3F0A0A8F1E73DAB4008E385A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		3F0A0A921E73DC10008E385A /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3F0A0A981E73DD9D008E385A /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		3F0A0A9C1E749D56008E385A /* VideoSplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoSplashViewController.swift; sourceTree = "<group>"; };
+		3F0A0A9D1E749D56008E385A /* WebViewContent.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = WebViewContent.html; sourceTree = "<group>"; };
+		3F0A0AA11E749D77008E385A /* titleSequence.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = titleSequence.gif; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +57,7 @@
 		3F0A0A691E73BFF4008E385A = {
 			isa = PBXGroup;
 			children = (
+				3F0A0AA01E749D5C008E385A /* Assets */,
 				3F0A0A8D1E73DAA1008E385A /* Helpers */,
 				3F0A0A741E73BFF4008E385A /* HealthCare */,
 				3F0A0A731E73BFF4008E385A /* Products */,
@@ -69,6 +76,8 @@
 		3F0A0A741E73BFF4008E385A /* HealthCare */ = {
 			isa = PBXGroup;
 			children = (
+				3F0A0A9C1E749D56008E385A /* VideoSplashViewController.swift */,
+				3F0A0A9D1E749D56008E385A /* WebViewContent.html */,
 				3F0A0A751E73BFF4008E385A /* AppDelegate.swift */,
 				3F0A0A771E73BFF4008E385A /* SWHMainViewController.swift */,
 				3F0A0A791E73BFF4008E385A /* Main.storyboard */,
@@ -98,6 +107,15 @@
 			);
 			name = Helpers;
 			path = HealthCare/Helpers;
+			sourceTree = "<group>";
+		};
+		3F0A0AA01E749D5C008E385A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				3F0A0AA11E749D77008E385A /* titleSequence.gif */,
+			);
+			name = Assets;
+			path = HealthCare/Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +180,8 @@
 			files = (
 				3F0A0A831E73BFF4008E385A /* LaunchScreen.storyboard in Resources */,
 				3F0A0A801E73BFF4008E385A /* Assets.xcassets in Resources */,
+				3F0A0AA21E749D77008E385A /* titleSequence.gif in Resources */,
+				3F0A0A9F1E749D56008E385A /* WebViewContent.html in Resources */,
 				3F0A0A7B1E73BFF4008E385A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +196,7 @@
 				3F0A0A7E1E73BFF4008E385A /* HealthCare.xcdatamodeld in Sources */,
 				3F0A0A781E73BFF4008E385A /* SWHMainViewController.swift in Sources */,
 				3F0A0A901E73DAB4008E385A /* Reachability.swift in Sources */,
+				3F0A0A9E1E749D56008E385A /* VideoSplashViewController.swift in Sources */,
 				3F0A0A911E73DAB4008E385A /* SwiftyJSON.swift in Sources */,
 				3F0A0A761E73BFF4008E385A /* AppDelegate.swift in Sources */,
 				3F0A0A991E73DD9D008E385A /* DataManager.swift in Sources */,
