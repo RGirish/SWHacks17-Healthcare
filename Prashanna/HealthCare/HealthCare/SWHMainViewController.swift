@@ -76,8 +76,14 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
         if segue.identifier == "Details" {
             
             let detailsViewController = segue.destination as! DetailsViewController
-            detailsViewController.titleString = "Tension-type headaches"
-            
+            if let name = self.conditionName
+            {
+                detailsViewController.titleString = name
+            }
+            else
+            {
+                detailsViewController.titleString = ""
+            }
         }
         
     }
@@ -100,6 +106,20 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
                     
                 else
                 {
+                    let json = JSON(data: apiData!)
+                    print(json)
+                    
+                    if let conditionsArray = json["conditions"].array{
+                        let count = 0
+                        for condition in conditionsArray {
+                            if(count == 0)
+                            {
+                                let name: String? = condition["name"].stringValue
+                                self.conditionName = name;
+                            }
+                        }
+                    }
+                    
                     DispatchQueue.main.async {
                         self.performSegue(withIdentifier: "Details", sender: self)
                     }
@@ -131,9 +151,14 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
             
 //            callWebService()
             
-            if let text = self.recognizedText
+//            if let text = self.recognizedText
+//            {
+//                callWebService(symptom: text)
+//            }
+
+            if self.recognizedText != nil
             {
-                callWebService(symptom: text)
+                callWebService(symptom: self.recognizedText!)
             }
             
         } else {
@@ -172,63 +197,68 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
         
         recognitionRequest.shouldReportPartialResults = true  //6
         
-        var symptomSet : Set<String> = []
+//        var symptomSet : Set<String> = []
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
             
             var isFinal = false  //8
             
             if result != nil {
                 
-                var tempSymptomSet : Set<String> = []
+//                var tempSymptomSet : Set<String> = []
+//                
+//                if symptomSet.count == 0
+//                {
+//                    let currentString = (result?.bestTranscription.formattedString)!
+//                    symptomSet.insert(currentString)
+//                }
+//                
+//                else if symptomSet.count > 0{
+//                    
+//                    var currentString = (result?.bestTranscription.formattedString)!
+//                    
+//                    for symptom in symptomSet
+//                    {
+//                        if currentString.range(of: symptom) != nil{
+//                            currentString = (currentString as NSString).replacingOccurrences(of: symptom, with: "")
+//                        }
+//                    }
+//                    
+//                    tempSymptomSet.insert(currentString)
+//                }
+//                
+//                if(tempSymptomSet.count > 0)
+//                {
+//                    for symptom in tempSymptomSet
+//                    {
+//                        symptomSet.insert(symptom)
+//                    }
+//                    
+//                    tempSymptomSet = []
+//                }
+//                
+//                var string = ""
+//                for symptom in symptomSet
+//                {
+//                    if string != ""
+//                    {
+//                        string = string+","+symptom
+//                    }
+//                    
+//                    else
+//                    {
+//                        string = symptom
+//                    }
+//                }
+//                
+////                let replaced = (string as NSString).replacingOccurrences(of:"Test", with: "")
+//                
+//                self.textView.text = self.diff + " with symptoms of " + string + " and it's not lupus but could be one of the suspects... Go... "  //9
+//                self.recognizedText = string;
                 
-                if symptomSet.count == 0
-                {
-                    let currentString = (result?.bestTranscription.formattedString)!
-                    symptomSet.insert(currentString)
-                }
+                self.recognizedText = (result?.bestTranscription.formattedString)!
                 
-                else if symptomSet.count > 0{
-                    
-                    var currentString = (result?.bestTranscription.formattedString)!
-                    
-                    for symptom in symptomSet
-                    {
-                        if currentString.range(of: symptom) != nil{
-                            currentString = (currentString as NSString).replacingOccurrences(of: symptom, with: "")
-                        }
-                    }
-                    
-                    tempSymptomSet.insert(currentString)
-                }
+                self.textView.text = self.diff + " with possible symptoms of " + (result?.bestTranscription.formattedString)! + " and it's not lupus but one of the suspects... Go... "  //9
                 
-                if(tempSymptomSet.count > 0)
-                {
-                    for symptom in tempSymptomSet
-                    {
-                        symptomSet.insert(symptom)
-                    }
-                    
-                    tempSymptomSet = []
-                }
-                
-                var string = ""
-                for symptom in symptomSet
-                {
-                    if string != ""
-                    {
-                        string = string+","+symptom
-                    }
-                    
-                    else
-                    {
-                        string = symptom
-                    }
-                }
-                
-//                let replaced = (string as NSString).replacingOccurrences(of:"Test", with: "")
-                
-                self.textView.text = self.diff + " with symptoms of " + string + " and it's not lupus but could be one of the suspects... Go... "  //9
-                self.recognizedText = string;
                 isFinal = (result?.isFinal)!
             }
             

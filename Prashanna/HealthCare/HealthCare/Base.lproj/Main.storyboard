@@ -23,7 +23,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pKC-eT-3ar">
-                                <rect key="frame" x="87.5" y="577" width="200" height="40"/>
+                                <rect key="frame" x="88" y="577" width="200" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bKC-3t-cBf"/>
                                     <constraint firstAttribute="width" constant="200" id="bVP-UG-7Mi"/>
@@ -34,7 +34,7 @@
                                 </state>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tre-dH-GxP">
-                                <rect key="frame" x="62.5" y="120" width="250" height="45"/>
+                                <rect key="frame" x="63" y="120" width="250" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="EJR-Wh-GIL"/>
                                     <constraint firstAttribute="height" constant="45" id="oIk-4I-svN"/>
@@ -44,7 +44,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6RP-xX-Qsp">
-                                <rect key="frame" x="62.5" y="223" width="250" height="45"/>
+                                <rect key="frame" x="63" y="223" width="250" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="0EQ-MV-RkK"/>
                                 </constraints>
@@ -144,25 +144,114 @@
                         <viewControllerLayoutGuide type="top" id="7uz-Vv-NOQ"/>
                         <viewControllerLayoutGuide type="bottom" id="lOY-7V-6qP"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="3Si-Sa-o7l">
+                    <view key="view" contentMode="scaleToFill" misplaced="YES" id="3Si-Sa-o7l">
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6pQ-hd-nle">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6pQ-hd-nle">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <string key="text">Southwest College Of Naturopathic Medicine
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">Imran Hasnain, MD
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="20" name=".AppleSystemUIFont"/>
+                                            <font key="NSOriginalFont" size="20" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Southwest College Of Naturopathic Medicine
 2164 E Broadway Rd,Ste 110, Tempe, AZ, 85282
-http://www.medcenter.scnm.edu/physicians/physicians-practitioners/jessica-mitchell-nd/
 Fax : 4809700003
 Landline : 4809700000
+Website: </string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="http://">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">www.medcenter.scnm.edu/physicians/physicians-practitioners/jessica-mitchell-nd/
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Insurance
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">AmeriHealth Local Value Network - EPO POS PPO HIX
+Advantage 6350 - HIX
 
-Arizona Natural Health Center
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Jackson Penry, MD
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="20" name=".AppleSystemUIFont"/>
+                                            <font key="NSOriginalFont" size="20" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">Arizona Natural Health Center
 1250 E Baseline Rd,Ste 104,Tempe,AZ,85282
-http://www.aznaturalhealth.com
-Landline : 4804560402</string>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+Landline : 4804560402
+Website: http://www.aznaturalhealth.com
+</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Insurance">
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
+                                            <font key="NSOriginalFont" size="18" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment>
+                                        <string key="content">
+Medicaid
+Health Net Individual  Family - PPO  HIX
+Medicare</string>
+                                        <attributes>
+                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES" calendarEvent="YES" shipmentTrackingNumber="YES" flightNumber="YES" lookupSuggestion="YES"/>
                             </textView>
@@ -176,6 +265,9 @@ Landline : 4804560402</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HKA-q6-inx"/>
+                    <connections>
+                        <outlet property="textView" destination="6pQ-hd-nle" id="n2X-DA-nfL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rej-u6-ezH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -227,25 +319,19 @@ Landline : 4804560402</string>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YLv-eV-heZ">
-                                <rect key="frame" x="88" y="527" width="200" height="40"/>
+                                <rect key="frame" x="88" y="577" width="200" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="ozR-1E-Pd6"/>
                                     <constraint firstAttribute="width" constant="200" id="ud6-J7-a7A"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Login">
+                                <state key="normal" title="Go">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="6at-z5-TPS" kind="show" animates="NO" id="BC7-GF-1j7"/>
+                                    <segue destination="6at-z5-TPS" kind="presentation" modalTransitionStyle="crossDissolve" id="BC7-GF-1j7"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWP-VK-XIn">
-                                <rect key="frame" x="93" y="140" width="189" height="55"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -253,13 +339,11 @@ Landline : 4804560402</string>
                             <constraint firstItem="YLv-eV-heZ" firstAttribute="centerX" secondItem="IjJ-Zc-8VW" secondAttribute="centerX" id="3TK-gi-ecm"/>
                             <constraint firstItem="f7Q-fn-WPJ" firstAttribute="centerY" secondItem="IjJ-Zc-8VW" secondAttribute="centerY" id="4OD-Ph-5Hv"/>
                             <constraint firstAttribute="trailing" secondItem="f7Q-fn-WPJ" secondAttribute="trailing" id="5hH-dB-N1b"/>
-                            <constraint firstItem="UWP-VK-XIn" firstAttribute="top" secondItem="Lbo-q2-lwo" secondAttribute="bottom" constant="120" id="6WC-nl-9yc"/>
                             <constraint firstItem="f7Q-fn-WPJ" firstAttribute="centerX" secondItem="IjJ-Zc-8VW" secondAttribute="centerX" id="6lL-lr-iaJ"/>
                             <constraint firstItem="BC8-lj-e99" firstAttribute="centerX" secondItem="IjJ-Zc-8VW" secondAttribute="centerX" id="7ab-6K-veH"/>
                             <constraint firstItem="BC8-lj-e99" firstAttribute="width" secondItem="f7Q-fn-WPJ" secondAttribute="width" id="7x7-pt-dP3"/>
                             <constraint firstItem="f7Q-fn-WPJ" firstAttribute="top" secondItem="IjJ-Zc-8VW" secondAttribute="top" id="A98-oC-Dmb"/>
-                            <constraint firstItem="UWP-VK-XIn" firstAttribute="centerX" secondItem="IjJ-Zc-8VW" secondAttribute="centerX" id="KMC-sj-YzP"/>
-                            <constraint firstItem="fd8-XR-Nq6" firstAttribute="top" secondItem="YLv-eV-heZ" secondAttribute="bottom" constant="100" id="NKR-1q-xfN"/>
+                            <constraint firstItem="fd8-XR-Nq6" firstAttribute="top" secondItem="YLv-eV-heZ" secondAttribute="bottom" constant="50" id="NKR-1q-xfN"/>
                             <constraint firstItem="BC8-lj-e99" firstAttribute="centerY" secondItem="IjJ-Zc-8VW" secondAttribute="centerY" id="P9o-u1-tM8"/>
                             <constraint firstItem="fd8-XR-Nq6" firstAttribute="top" secondItem="f7Q-fn-WPJ" secondAttribute="bottom" id="RD9-tN-Ug0"/>
                             <constraint firstItem="BC8-lj-e99" firstAttribute="height" secondItem="f7Q-fn-WPJ" secondAttribute="height" id="xig-j8-tbF"/>

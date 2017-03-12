@@ -10,6 +10,7 @@ import UIKit
 
 class DetailsViewController: UIViewController {
 
+    @IBOutlet weak var textView: UITextView!
     var conditionName: String? = nil
     var titleString:String?
     
@@ -18,7 +19,7 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = titleString
-//        callWebService()
+        callWebService()
         // Do any additional setup after loading the view.
     }
 
@@ -38,39 +39,55 @@ class DetailsViewController: UIViewController {
     
     private func callWebService()
     {
-        let apiUrl: String = "http://192.168.0.6:8080/getDoctorsAndInsurance?condition=Tension-type%20headaches&location=33.4177513,-111.934767&"
-        
-        if checkReachability()
+        if let name = self.titleString
         {
-            DataManger.getDataFromURLWithSuccess(apiUrl, success: { (apiData) in
-                if(apiData == nil)
-                {
-                    let alert = UIAlertController(title: "Something went wrong", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                        self.dismiss(animated: true, completion: nil)
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                }
+            let originalUrl = "http://192.168.0.6:8080/getDoctorsAndInsurance?condition="+name+"&location=33.4177513,-111.934767&" as NSString
+            let apiUrl :String = originalUrl.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
+            
+            if checkReachability()
+            {
+                DataManger.getDataFromURLWithSuccess(apiUrl, success: { (apiData) in
+                    if(apiData == nil)
+                    {
+                        let alert = UIAlertController(title: "Something went wrong", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                            self.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                        
+                    else
+                    {
+                        
+                        let json = JSON(data: apiData!)
+                        print(json)
+                        
+                        if let conditionsArray = json["conditions"].array{
+                            let count = 0
+                            for condition in conditionsArray {
+                                if(count == 0)
+                                {
+                                    let name: String? = condition["name"].stringValue
+                                    self.conditionName = name;
+                                }
+                            }
+                        }
+                    }
                     
-                else
-                {
-                   
-                }
+                })
+            }
                 
-            })
+            else
+            {
+                let alert = UIAlertController(title: "Check Data Connection", message: "Not able to load data", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
+                    self.dismiss(animated: true, completion: nil)
+                    //                self.popToRoot()
+                }))
+                self.present(alert, animated: true, completion: nil)
+                
+            }
         }
-            
-        else
-        {
-            let alert = UIAlertController(title: "Check Data Connection", message: "Not able to load data", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
-                self.dismiss(animated: true, completion: nil)
-                //                self.popToRoot()
-            }))
-            self.present(alert, animated: true, completion: nil)
-            
-        }
-        
     }
 
     // MARK: - Navigation
