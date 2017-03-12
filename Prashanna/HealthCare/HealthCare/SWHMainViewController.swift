@@ -23,6 +23,7 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
     private let diff = "Differential Diagnosis, people.. "
     private var recognizedText:String?
     private var reachability: Reachability? = Reachability.networkReachabilityForInternetConnection()
+    private var conditionName: String? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,10 +69,23 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
         }
     }
     
-    private func callWebService(symptoms: String)
-    {
-        let apiUrl: String = "http://10.152.114.246:8080/getDiagnosis?symptoms="+self.recognizedText!+"&sex=male&age=30"
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
         
+        if segue.identifier == "Details" {
+            
+            let detailsViewController = segue.destination as! DetailsViewController
+            detailsViewController.titleString = "Tension-type headaches"
+            
+        }
+        
+    }
+    
+    private func callWebService(symptom: String)
+    {
+         let apiUrl: String = "http://192.168.0.6:8080/getDiagnosis?symptoms="+symptom+"&sex=male&age=30"
+
         if checkReachability()
         {
             DataManger.getDataFromURLWithSuccess(apiUrl, success: { (apiData) in
@@ -80,55 +94,15 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
                     let alert = UIAlertController(title: "Something went wrong", message: "Please try again", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { action in
                         self.dismiss(animated: true, completion: nil)
-                        //                        self.popToRoot()
                     }))
                     self.present(alert, animated: true, completion: nil)
                 }
                     
                 else
                 {
-                    let json = JSON(data: apiData!)
-                    print(json)
-                    
-                    if let conditionsArray = json["conditions"].array{
-                        for condition in conditionsArray {
-                            let id: String? = condition["id"].stringValue
-                            let name: String? = condition["name"].stringValue
-                            let probability: String? = condition["probability"].stringValue
-                            
-                            print(id!+" "+name!+" "+probability!);
-                        }
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "Details", sender: self)
                     }
-                    
-//                     if let question = json["question"] as? [String: Any]
-//                     {
-                            let type: String? = json["question"]["type"].stringValue
-                            let text: String? = json["question"]["text"].stringValue
-                            
-                            print(type!+" "+text!);
-                            
-                            if let items = json["question"]["items"].array
-                            {
-                                for item in items
-                                {
-                                    let id: String? = item["id"].stringValue
-                                    let name: String? = item["name"].stringValue
-                                    
-                                    print(id!+" "+name!);
-                                    
-                                    if let choices = item["choices"].array
-                                    {
-                                        for choice in choices
-                                        {
-                                            let id: String? = choice["id"].stringValue
-                                            let label: String? = choice["label"].stringValue
-                                            
-                                            print(id!+" "+label!);
-                                        }
-                                    }
-                                }
-                            }
-//                    }
                 }
             })
         }
@@ -155,9 +129,11 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
             let image : UIImage = UIImage(named:"ready")!
             microphoneButton.setImage(image, for: .normal)
             
-            if self.recognizedText != nil
+//            callWebService()
+            
+            if let text = self.recognizedText
             {
-                callWebService(symptoms: self.recognizedText!)
+                callWebService(symptom: text)
             }
             
         } else {
@@ -196,15 +172,63 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
         
         recognitionRequest.shouldReportPartialResults = true  //6
         
+        var symptomSet : Set<String> = []
         recognitionTask = speechRecognizer.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in  //7
             
             var isFinal = false  //8
             
             if result != nil {
                 
-                self.recognizedText = (result?.bestTranscription.formattedString)!
+                var tempSymptomSet : Set<String> = []
                 
-                self.textView.text = self.diff + " with possible symptoms of " + (result?.bestTranscription.formattedString)! + " and it's not lupus but one of the suspects... Go... "  //9
+                if symptomSet.count == 0
+                {
+                    let currentString = (result?.bestTranscription.formattedString)!
+                    symptomSet.insert(currentString)
+                }
+                
+                else if symptomSet.count > 0{
+                    
+                    var currentString = (result?.bestTranscription.formattedString)!
+                    
+                    for symptom in symptomSet
+                    {
+                        if currentString.range(of: symptom) != nil{
+                            currentString = (currentString as NSString).replacingOccurrences(of: symptom, with: "")
+                        }
+                    }
+                    
+                    tempSymptomSet.insert(currentString)
+                }
+                
+                if(tempSymptomSet.count > 0)
+                {
+                    for symptom in tempSymptomSet
+                    {
+                        symptomSet.insert(symptom)
+                    }
+                    
+                    tempSymptomSet = []
+                }
+                
+                var string = ""
+                for symptom in symptomSet
+                {
+                    if string != ""
+                    {
+                        string = string+","+symptom
+                    }
+                    
+                    else
+                    {
+                        string = symptom
+                    }
+                }
+                
+//                let replaced = (string as NSString).replacingOccurrences(of:"Test", with: "")
+                
+                self.textView.text = self.diff + " with symptoms of " + string + " and it's not lupus but could be one of the suspects... Go... "  //9
+                self.recognizedText = string;
                 isFinal = (result?.isFinal)!
             }
             

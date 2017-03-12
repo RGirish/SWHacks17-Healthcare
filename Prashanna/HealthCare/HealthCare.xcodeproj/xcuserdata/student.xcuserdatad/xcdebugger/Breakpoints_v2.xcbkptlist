@@ -9,44 +9,108 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510950155.271062"
+            filePath = "HealthCare/DetailsViewController.swift"
+            timestampString = "510995010.584637"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "callWebService(symptoms:)"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "callWebService()"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "HealthCare.SWHMainViewController.(callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptoms : Swift.String) -&gt; ()"
+                  symbolName = "HealthCare.DetailsViewController.(callWebService in _1870BEAF47912FB430148608683961D4) () -&gt; ()"
                   moduleName = "HealthCare"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/SWHMainViewController.swift"
-                  timestampString = "510955934.689799"
+                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/DetailsViewController.swift"
+                  timestampString = "510997031.267453"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "77"
-                  endingLineNumber = "77"
-                  offsetFromSymbolStart = "464">
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "92">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "HealthCare.SWHMainViewController.((callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptoms : Swift.String) -&gt; ()).(closure #1)"
+                  symbolName = "HealthCare.DetailsViewController.((callWebService in _1870BEAF47912FB430148608683961D4) () -&gt; ()).(closure #1)"
+                  moduleName = "HealthCare"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/DetailsViewController.swift"
+                  timestampString = "510997031.270468"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HealthCare/DetailsViewController.swift"
+            timestampString = "510995010.584637"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "callWebService()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HealthCare/SWHMainViewController.swift"
+            timestampString = "510995950.329183"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "callWebService(symptom:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HealthCare.SWHMainViewController.((callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptom : Swift.String) -&gt; ()).(closure #1)"
                   moduleName = "HealthCare"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/SWHMainViewController.swift"
-                  timestampString = "510955934.694131"
+                  timestampString = "510997031.282322"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "78"
-                  endingLineNumber = "78"
-                  offsetFromSymbolStart = "40">
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "1096">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HealthCare.SWHMainViewController.((callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptom : Swift.String) -&gt; ()).(closure #1).(closure #2)"
+                  moduleName = "HealthCare"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/SWHMainViewController.swift"
+                  timestampString = "510997031.285493"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "105"
+                  endingLineNumber = "105"
+                  offsetFromSymbolStart = "136">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -58,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510950341.329294"
+            timestampString = "510995950.329183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "callWebService(symptoms:)"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "microphoneTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -74,12 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510950424.194205"
+            timestampString = "510995176.58047"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "callWebService(symptoms:)"
+            startingLineNumber = "78"
+            endingLineNumber = "78"
+            landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,61 +154,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510950426.077967"
+            timestampString = "510995763.364719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "callWebService(symptoms:)"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "callWebService(symptom:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510955226.337045"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "callWebService(symptoms:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510955932.084691"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "callWebService(symptoms:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HealthCare/SWHMainViewController.swift"
-            timestampString = "510956041.705604"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
-            landmarkName = "callWebService(symptoms:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HealthCare.SWHMainViewController.(callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptom : Swift.String) -&gt; ()"
+                  moduleName = "HealthCare"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/SWHMainViewController.swift"
+                  timestampString = "510997031.30217"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "91"
+                  endingLineNumber = "91"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HealthCare.SWHMainViewController.((callWebService in _5A6E1EACCCC115EE8457A524C9988EA2) (symptom : Swift.String) -&gt; ()).(closure #1)"
+                  moduleName = "HealthCare"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/student/Desktop/SWHacks17/Prashanna/HealthCare/HealthCare/SWHMainViewController.swift"
+                  timestampString = "510997031.305322"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
