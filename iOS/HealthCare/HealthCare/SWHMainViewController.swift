@@ -1,4 +1,4 @@
-//
+
 //  ViewController.swift
 //  HealthCare
 //
@@ -90,7 +90,8 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
     
     private func callWebService(symptom: String)
     {
-         let apiUrl: String = "http://192.168.0.6:8080/getDiagnosis?symptoms="+symptom+"&sex=male&age=30"
+//        let apiUrl: String = Utils.getURLWithString(url:"getDiagnosis?symptoms="+symptom+"&sex=male&age=30");
+           let apiUrl: String = "http://10.142.201.242:8080/getDiagnosis?symptoms="+symptom+"&sex=male&age=30"
 
         if checkReachability()
         {
@@ -107,7 +108,7 @@ class SWHMainViewController: UIViewController, SFSpeechRecognizerDelegate,UIText
                 else
                 {
                     let json = JSON(data: apiData!)
-                    print(json)
+//                    print(json)
                     
                     if let conditionsArray = json["conditions"].array{
                         let count = 0

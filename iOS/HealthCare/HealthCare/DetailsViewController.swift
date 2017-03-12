@@ -41,7 +41,8 @@ class DetailsViewController: UIViewController {
     {
         if let name = self.titleString
         {
-            let originalUrl = "http://192.168.0.6:8080/getDoctorsAndInsurance?condition="+name+"&location=33.4177513,-111.934767&" as NSString
+            let originalUrl = "http://10.142.201.242:8080/getDoctorsAndInsurance?condition="+name+"&location=33.4177513,-111.934767&"
+//            let originalUrl = Utils.getURLWithString(url: "getDoctorsAndInsurance?condition="+name+"&location=33.4177513,-111.934767&") as NSString
             let apiUrl :String = originalUrl.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
             
             if checkReachability()
@@ -60,7 +61,7 @@ class DetailsViewController: UIViewController {
                     {
                         
                         let json = JSON(data: apiData!)
-                        print(json)
+//                        print(json)
                         
                         if let conditionsArray = json["conditions"].array{
                             let count = 0
