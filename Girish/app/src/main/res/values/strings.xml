@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Healthcare</string>
+    <string name="app_name">Dr. Grey</string>
     <string-array name="genders">
-        <item>male</item>
-        <item>female</item>
+        <item>Male</item>
+        <item>Female</item>
     </string-array>
 </resources>

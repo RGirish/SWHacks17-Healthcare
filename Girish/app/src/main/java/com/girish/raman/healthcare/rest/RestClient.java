@@ -23,11 +23,9 @@ public class RestClient {
                     @Override
                     protected void onDone(boolean success, JSONObject jsonResults) {
                         if (success) {
-                            Log.e("SUCCESS", jsonResults.toString());
                             listener.onComplete("diagnosis", jsonResults.toString());
                         } else {
-                            Log.e("FAILUREEEE", "SUCCESS");
-                            listener.onError("error");
+                            Log.e("getDiagnosis FAILURE", "in RestClient");
                         }
                     }
                 });
@@ -40,11 +38,9 @@ public class RestClient {
                     @Override
                     protected void onDone(boolean success, JSONObject jsonResults) {
                         if (success) {
-                            Log.e("SUCCESS", jsonResults.toString());
                             listener.onComplete("doctors", jsonResults.toString());
                         } else {
-                            Log.e("FAILUREEEE", "SUCCESS");
-                            listener.onError("error");
+                            Log.e("getDoctors FAILURE", "in RestClient");
                         }
                     }
                 });

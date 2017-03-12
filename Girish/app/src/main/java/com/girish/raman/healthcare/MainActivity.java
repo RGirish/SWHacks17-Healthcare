@@ -3,6 +3,7 @@ package com.girish.raman.healthcare;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -21,13 +22,16 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.girish.raman.healthcare.model.Condition;
+import com.girish.raman.healthcare.model.Doctors;
 import com.girish.raman.healthcare.model.Output;
+import com.girish.raman.healthcare.model.Practice;
 import com.girish.raman.healthcare.rest.RestClient;
 
 import net.gotev.speech.GoogleVoiceTypingDisabledException;
 import net.gotev.speech.Speech;
 import net.gotev.speech.SpeechDelegate;
 import net.gotev.speech.SpeechRecognitionNotAvailable;
+import net.gotev.speech.TextToSpeechCallback;
 import net.gotev.speech.ui.SpeechProgressView;
 
 import java.io.IOException;
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements APIListener, Loca
     private double longitude;
     private double latitude;
     private List<String> list;
+    public static List<Practice> practices;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements APIListener, Loca
     public void onClickSubmitInfo(View view) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putString("age", ((EditText) findViewById(R.id.age)).getText().toString()).apply();
-        prefs.edit().putString("sex", ((Spinner) findViewById(R.id.sex)).getSelectedItem().toString()).apply();
+        prefs.edit().putString("sex", ((Spinner) findViewById(R.id.sex)).getSelectedItem().toString().toLowerCase()).apply();
         setContentView(R.layout.activity_main);
     }
 
     public void startListening(View view) {
         try {
-            SpeechProgressView speechProgressView = (SpeechProgressView) findViewById(R.id.progress);
+            final SpeechProgressView speechProgressView = (SpeechProgressView) findViewById(R.id.progress);
             int[] heights = {60, 76, 58, 80, 55};
             speechProgressView.setBarMaxHeightsInDp(heights);
 
@@ -107,38 +112,83 @@ public class MainActivity extends AppCompatActivity implements APIListener, Loca
                     for (String res : results) {
                         str.append(res).append(" ");
                     }
-                    //Log.e("speech", "partial result: " + str.toString().trim());
-                    list.add(str.toString().trim());
                 }
 
                 @Override
                 public void onSpeechResult(String result) {
-                    List<String> mylist = new ArrayList<>();
-                    for (int i = 0; i < list.size(); i++) {
-                        String s = list.get(i);
-                        if (i == 0) {
-                            mylist.add(s.trim());
-                        } else {
-                            String ss = s.replace(list.get(i - 1), "");
-                            mylist.add(ss.trim());
-                        }
-                    }
-                    StringBuilder builder = new StringBuilder();
-                    for (String s : mylist) {
-                        builder.append(s).append(",");
-                        Log.e("mylist", s);
-                    }
+                    if (result.contains("find") && result.contains("health condition")) {
+                        Speech.getInstance().say("What is bothering you?", new TextToSpeechCallback() {
+                            @Override
+                            public void onStart() {
+                                Log.i("speech", "speech started");
+                            }
 
-                    String symptoms = builder.toString().substring(1, builder.toString().length() - 1);
+                            @Override
+                            public void onCompleted() {
+                                try {
+                                    Speech.getInstance().startListening(speechProgressView, new SpeechDelegate() {
+                                        @Override
+                                        public void onStartOfSpeech() {
+                                            Log.i("speech", "speech recognition is now active");
+                                        }
 
-                    Log.e("speech", "result: " + symptoms);
-                    Toast.makeText(MainActivity.this, symptoms, Toast.LENGTH_SHORT).show();
-                    dialog = ProgressDialog.show(MainActivity.this, null, "Wait a minute.", true);
-                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                    String age = prefs.getString("age", "23");
-                    String sex = prefs.getString("sex", "male");
-                    client.getDiagnosis(symptoms, age, sex);
-                    list.clear();
+                                        @Override
+                                        public void onSpeechRmsChanged(float value) {
+                                            Log.d("speech", "rms is now: " + value);
+                                        }
+
+                                        @Override
+                                        public void onSpeechPartialResults(List<String> results) {
+                                            StringBuilder str = new StringBuilder();
+                                            for (String res : results) {
+                                                str.append(res).append(" ");
+                                            }
+                                            list.add(str.toString().trim());
+                                        }
+
+                                        @Override
+                                        public void onSpeechResult(String result) {
+                                            Log.e("result", result);
+                                            List<String> mylist = new ArrayList<>();
+                                            for (int i = 0; i < list.size(); i++) {
+                                                String s = list.get(i);
+                                                if (i == 0) {
+                                                    mylist.add(s.trim());
+                                                } else {
+                                                    String ss = s.replace(list.get(i - 1), "");
+                                                    mylist.add(ss.trim());
+                                                }
+                                            }
+                                            StringBuilder builder = new StringBuilder();
+                                            for (String s : mylist) {
+                                                builder.append(s).append(",");
+                                                Log.e("mylist", s);
+                                            }
+
+                                            String symptoms = builder.toString().substring(1, builder.toString().length() - 1);
+
+                                            Log.e("speech", "result: " + symptoms);
+                                            dialog = ProgressDialog.show(MainActivity.this, null, "Wait a minute.", true);
+                                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                            String age = prefs.getString("age", "23");
+                                            String sex = prefs.getString("sex", "male");
+                                            client.getDiagnosis(symptoms, age, sex);
+                                            list.clear();
+                                        }
+                                    });
+                                } catch (SpeechRecognitionNotAvailable speechRecognitionNotAvailable) {
+                                    speechRecognitionNotAvailable.printStackTrace();
+                                } catch (GoogleVoiceTypingDisabledException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onError() {
+                                Log.i("speech", "speech error");
+                            }
+                        });
+                    }
                 }
             });
         } catch (SpeechRecognitionNotAvailable exc) {
@@ -178,8 +228,23 @@ public class MainActivity extends AppCompatActivity implements APIListener, Loca
                 Log.e("IOException", e.toString());
             }
         } else if ("doctors".equals(type)) {
-            Log.e("DOCTORS", result);
+            try {
+                Doctors doctors = mapper.readValue(result, Doctors.class);
+                processDoctorsOutput(doctors);
+            } catch (IOException e) {
+                Log.e("IOException", e.toString());
+            }
         }
+    }
+
+    private void processDoctorsOutput(Doctors doctors) {
+        Log.e("processDoctorsOutput", "processDoctorsOutput");
+        practices = doctors.getPractices();
+        for (Practice practice : doctors.getPractices()) {
+            Log.e("prac", practice.getName());
+        }
+        Intent intent = new Intent(this, DoctorDetails.class);
+        startActivity(intent);
     }
 
     private void processOutput(Output output) {
@@ -187,18 +252,14 @@ public class MainActivity extends AppCompatActivity implements APIListener, Loca
         conditionList.sort(new ConditionsComparator());
         String conditionName = conditionList.get(0).getName();
         Speech.getInstance().say("Your problem might be " + conditionName);
-        //Log.e("latitude", String.valueOf(latitude));
-        //Log.e("longitude", String.valueOf(longitude));
-        // client.getDoctors(conditionName, latitude + "," + latitude);
-    }
-
-    @Override
-    public void onError(String error) {
-        dialog.dismiss();
+        if (latitude == 0.0 || longitude == 0.0) {
+            latitude = 33.41776;
+            longitude = -111.9370287;
+        }
+        client.getDoctors(conditionName, latitude + "," + latitude);
     }
 
     public void onLocationChanged(Location location) {
-        //Log.e("changed", "changed");
         longitude = location.getLongitude();
         latitude = location.getLatitude();
     }
