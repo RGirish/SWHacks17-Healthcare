@@ -11,6 +11,9 @@ public class Data {
 	@JsonProperty("practices")
 	private List<Practice> practices;
 
+	@JsonProperty("insurances")
+	private List<Insurance> insurances;
+
 	/**
 	 * @return the practices
 	 */
@@ -24,5 +27,20 @@ public class Data {
 	 */
 	public void setPractices(List<Practice> practices) {
 		this.practices = practices;
+	}
+
+	/**
+	 * @return the insurances
+	 */
+	public List<Insurance> getInsurances() {
+		return insurances;
+	}
+
+	/**
+	 * @param insurances
+	 *            the insurances to set
+	 */
+	public void setInsurances(List<Insurance> insurances) {
+		this.insurances = insurances;
 	}
 }

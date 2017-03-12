@@ -6,15 +6,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Practice {
 
-	private String distance;
+
 	private String name;
 	@JsonProperty("visit_address")
 	private VisitAddress visitAddress;
 	@JsonProperty("phones")
 	private List<Phone> phones;
 	private String website;
+	private String distance;
 	@JsonProperty("insurance_uids")
 	private List<String> insuranceUids;
+	@JsonProperty("insuranceData")
+	private List<String> insuranceData;
 
 	/**
 	 * @return the distance
@@ -104,6 +107,21 @@ public class Practice {
 	 */
 	public void setInsuranceUids(List<String> insuranceUids) {
 		this.insuranceUids = insuranceUids;
+	}
+
+	/**
+	 * @return the insuranceData
+	 */
+	public List<String> getInsuranceData() {
+		return insuranceData;
+	}
+
+	/**
+	 * @param insuranceData
+	 *            the insuranceData to set
+	 */
+	public void setInsuranceData(List<String> insuranceData) {
+		this.insuranceData = insuranceData;
 	}
 
 }

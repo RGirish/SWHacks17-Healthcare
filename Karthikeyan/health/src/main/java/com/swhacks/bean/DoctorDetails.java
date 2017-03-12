@@ -1,16 +1,18 @@
 package com.swhacks.bean;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DoctorDetails {
 
 	@JsonProperty("data")
-	private Data data;
+	private List<Data> data;
 
 	/**
 	 * @return the data
 	 */
-	public Data getData() {
+	public List<Data> getData() {
 		return data;
 	}
 
@@ -18,7 +20,7 @@ public class DoctorDetails {
 	 * @param data
 	 *            the data to set
 	 */
-	public void setData(Data data) {
+	public void setData(List<Data> data) {
 		this.data = data;
 	}
 }
